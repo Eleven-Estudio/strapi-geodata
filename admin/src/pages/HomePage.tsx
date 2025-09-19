@@ -124,11 +124,9 @@ const HomePage = () => {
         {saved && (
           <Box style={{
             padding: '1rem',
-            backgroundColor: '#d4edda',
-            border: '1px solid #c3e6cb',
+            border: '1px solid #ddd',
             borderRadius: '4px',
-            marginBottom: '1rem',
-            color: '#155724'
+            marginBottom: '1rem'
           }}>
             <Typography variant="beta" style={{ fontWeight: '600' }}>
               ✅ Guardado
@@ -142,11 +140,9 @@ const HomePage = () => {
         {error && (
           <Box style={{
             padding: '1rem',
-            backgroundColor: '#f8d7da',
-            border: '1px solid #f5c6cb',
+            border: '1px solid #ddd',
             borderRadius: '4px',
-            marginBottom: '1rem',
-            color: '#721c24'
+            marginBottom: '1rem'
           }}>
             <Typography variant="beta" style={{ fontWeight: '600' }}>
               ❌ Error
@@ -164,8 +160,7 @@ const HomePage = () => {
           <Box style={{
             padding: '1.5rem',
             border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#fff'
+            borderRadius: '8px'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🗺️ Configuración del Mapa
@@ -228,8 +223,7 @@ const HomePage = () => {
           <Box style={{
             padding: '1.5rem',
             border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#fff'
+            borderRadius: '8px'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               📍 Marcador por Defecto
@@ -266,8 +260,7 @@ const HomePage = () => {
           <Box style={{
             padding: '1.5rem',
             border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#fff'
+            borderRadius: '8px'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🔍 Configuración de Búsqueda
@@ -312,8 +305,7 @@ const HomePage = () => {
           <Box style={{
             padding: '1.5rem',
             border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#fff'
+            borderRadius: '8px'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🎨 Configuración de Interfaz
@@ -374,8 +366,7 @@ const HomePage = () => {
           <Box style={{
             padding: '1.5rem',
             border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#fff'
+            borderRadius: '8px'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🌍 Proveedor de Mapas
@@ -403,8 +394,7 @@ const HomePage = () => {
           <Box style={{
             padding: '1.5rem',
             border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#fff'
+            borderRadius: '8px'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               📄 Configuración para plugins.ts
@@ -448,7 +438,7 @@ const HomePage = () => {
         </Box>
 
         {/* Información adicional */}
-        <Box style={{ marginTop: '3rem', padding: '1.5rem', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+        <Box style={{ marginTop: '3rem', padding: '1.5rem', borderRadius: '8px', border: '1px solid #ddd' }}>
           <Typography variant="beta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
             📖 Instrucciones de Uso:
           </Typography>
@@ -468,19 +458,6 @@ const HomePage = () => {
           </Typography>
         </Box>
 
-        {/* Créditos */}
-        <Box style={{ marginTop: '2rem', padding: '1rem', borderTop: '1px solid #ddd' }}>
-          <Typography variant="beta" style={{ fontWeight: '600', marginBottom: '0.5rem' }}>
-            👨‍💻 Autor Original:
-          </Typography>
-          <Typography variant="gamma" style={{ lineHeight: '1.6' }}>
-            Plugin original por <Typography style={{ fontWeight: "bold" }}>red-made</Typography>. Visita{' '}
-            <BaseLink style={{ fontWeight: "bold" }} href="https://github.com/red-made/strapi-geodata" target="_blank" rel="noopener noreferrer">
-              GitHub @github.com/red-made/strapi-geodata
-            </BaseLink>
-            {' '}para más información.
-          </Typography>
-        </Box>
       </Box>
     </Main>
   );
