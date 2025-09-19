@@ -2,7 +2,7 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
-import { F as ForwardRef } from "./index-BRG6ORBJ.mjs";
+import { F as ForwardRef } from "./index-BZLuze5Q.mjs";
 import { Box, Typography, TextInput, Button, JSONInput } from "@strapi/design-system";
 import "leaflet/dist/leaflet.css";
 const version = "0.1.02";
@@ -20,8 +20,8 @@ const customIcon = new L.Icon({
   shadowAnchor: [12, 41]
 });
 const mapProps = {
-  zoom: 7,
-  center: [41.9, 12.5],
+  zoom: 12,
+  center: [14.557316602350959, -90.73227524766911],
   tileUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   tileAttribution: "OSM attribution",
   tileAccessToken: ""

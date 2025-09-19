@@ -4,7 +4,7 @@ const jsxRuntime = require("react/jsx-runtime");
 const react = require("react");
 const reactLeaflet = require("react-leaflet");
 const L = require("leaflet");
-const index = require("./index-neYYwkGF.js");
+const index = require("./index-CNy4Qqpi.js");
 const designSystem = require("@strapi/design-system");
 require("leaflet/dist/leaflet.css");
 const _interopDefault = (e) => e && e.__esModule ? e : { default: e };
@@ -24,8 +24,8 @@ const customIcon = new L__default.default.Icon({
   shadowAnchor: [12, 41]
 });
 const mapProps = {
-  zoom: 7,
-  center: [41.9, 12.5],
+  zoom: 12,
+  center: [14.557316602350959, -90.73227524766911],
   tileUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   tileAttribution: "OSM attribution",
   tileAccessToken: ""

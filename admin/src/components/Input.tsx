@@ -45,8 +45,8 @@ interface InputProps {
 }
 
 const mapProps = {
-  zoom: 7,
-  center: [41.9, 12.5] as LatLngTuple,
+  zoom: 12,
+  center: [14.557316602350959, -90.73227524766911] as LatLngTuple,
   tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   tileAttribution: 'OSM attribution',
   tileAccessToken: '',
