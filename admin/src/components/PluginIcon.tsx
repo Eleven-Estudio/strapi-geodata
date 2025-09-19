@@ -1,4 +1,4 @@
-import { forwardRef, Ref, SVGProps } from 'react';
+import { forwardRef, type Ref, type SVGProps } from 'react';
 
 const PluginIcon = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
@@ -10,6 +10,7 @@ const PluginIcon = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => 
     ref={ref}
     {...props}
   >
+    <title>Geodata</title>
     <g>
       <g id="Layer_1">
         <g>

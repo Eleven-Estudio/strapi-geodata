@@ -14,6 +14,7 @@ export default [
     handler: 'controller.getConfig',
     config: {
       policies: [],
+      auth: false,
     },
   },
 ];

@@ -8,9 +8,7 @@ import {
   Typography,
   Loader,
   JSONInput,
-  TextInput,
-  Field,
-  Button,
+  TextInput, Button
 } from '@strapi/design-system';
 
 import 'leaflet/dist/leaflet.css';
@@ -24,11 +22,11 @@ const shadowUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png
 const customIcon = new L.Icon({
   iconUrl: iconUrl,
   iconRetinaUrl: iconRetinaUrl,
-  iconSize: [25, 41], 
-  iconAnchor: [12, 41], 
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
   popupAnchor: [0, -41],
   shadowUrl: shadowUrl,
-  shadowSize: [41, 41], 
+  shadowSize: [41, 41],
   shadowAnchor: [12, 41],
 });
 
@@ -42,20 +40,12 @@ interface InputProps {
   [key: string]: any;
 }
 
-// Los props del mapa ahora serán cargados dinámicamente
-let mapProps = {
-  zoom: 15,
-  center: [14.557316602350959, -90.73227524766911] as LatLngTuple,
-  tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  tileAttribution: 'OSM attribution',
-  tileAccessToken: '',
-};
-
 const Input: React.FC<InputProps> = (props) => {
   const [map, setMap] = useState<any>(null);
   const [location, setLocation] = useState<any>(props.value);
   const [config, setConfig] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [configLoaded, setConfigLoaded] = useState<boolean>(false);
 
   const latRef = useRef<HTMLInputElement>(null);
   const lngRef = useRef<HTMLInputElement>(null);
@@ -65,33 +55,40 @@ const Input: React.FC<InputProps> = (props) => {
   useEffect(() => {
     const loadConfig = async () => {
       try {
-        const response = await fetch('/geodata/config');
-        if (response.ok) {
-          const pluginConfig = await response.json();
-          setConfig(pluginConfig);
+        const response = await fetch('/api/geodata-config');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        const data = result.data;
 
-          // Actualizar mapProps con la configuración cargada
-          mapProps = {
-            zoom: pluginConfig.defaultMap?.zoom || 15,
-            center: [
-              pluginConfig.defaultMap?.center?.lat || 14.557316602350959,
-              pluginConfig.defaultMap?.center?.lng || -90.73227524766911
-            ] as LatLngTuple,
-            tileUrl: pluginConfig.tileLayer?.url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            tileAttribution: pluginConfig.tileLayer?.attribution || 'OSM attribution',
-            tileAccessToken: '',
-          };
+        setConfig(data);
+        setConfigLoaded(true);
 
-          // Si no hay location inicial, usar el marcador por defecto
-          if (!props.value && pluginConfig.defaultMarker) {
-            setLocation({
-              lat: pluginConfig.defaultMarker.lat,
-              lng: pluginConfig.defaultMarker.lng
-            });
-          }
+        // Si no hay location inicial, usar el marcador por defecto
+        if (!props.value && data.defaultMarker) {
+          setLocation({
+            lat: data.defaultMarker.lat,
+            lng: data.defaultMarker.lng
+          });
         }
       } catch (error) {
         console.error('Error loading plugin config:', error);
+        // Usar configuración por defecto si falla la carga
+        const defaultConfig = {
+          defaultMap: {
+            zoom: 15,
+            maxZoom: 18,
+            minZoom: 5,
+            center: { lat: 14.557316602350959, lng: -90.73227524766911 }
+          },
+          tileLayer: {
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            attribution: '© OpenStreetMap contributors'
+          }
+        };
+        setConfig(defaultConfig);
+        setConfigLoaded(true);
       } finally {
         setLoading(false);
       }
@@ -143,11 +140,21 @@ const Input: React.FC<InputProps> = (props) => {
       }
 
       const data = await response.json();
-      if (data.length > 0) {
+      if (data && data.length > 0) {
         let lat = parseFloat(data[0].lat);
         let lng = parseFloat(data[0].lon);
         setLocation({ lat, lng });
-        map.panTo({ lat, lng });
+
+        // Si la nueva ubicación está muy lejos, hacer setView con zoom apropiado
+        // Si está cerca, solo hacer pan para mantener el zoom actual
+        const currentCenter = map.getCenter();
+        const distance = currentCenter.distanceTo([lat, lng]);
+
+        if (distance > 50000) { // Si está a más de 50km, hacer zoom
+          map.setView([lat, lng], Math.max(map.getZoom(), 12));
+        } else {
+          map.panTo([lat, lng]);
+        }
       }
     } catch (error) {
       console.error('Error searching location:', error);
@@ -162,15 +169,20 @@ const Input: React.FC<InputProps> = (props) => {
       lat = parseFloat(lat);
       lng = parseFloat(lng);
       setLocation({ lat, lng });
-      map.panTo({ lat, lng });
+
+      // Si la nueva ubicación está muy lejos, hacer setView con zoom apropiado
+      // Si está cerca, solo hacer pan para mantener el zoom actual
+      const currentCenter = map.getCenter();
+      const distance = currentCenter.distanceTo([lat, lng]);
+
+      if (distance > 50000) { // Si está a más de 50km, hacer zoom
+        map.setView([lat, lng], Math.max(map.getZoom(), 12));
+      } else {
+        map.panTo([lat, lng]);
+      }
     }
   }
 
-  function handleKeyPress(event: any) {
-    if (event?.key === 'Enter') {
-      console.log('enter press here! ');
-    }
-  }
 
   const marginBottom = '2rem';
   const display = 'block';
@@ -220,19 +232,42 @@ const Input: React.FC<InputProps> = (props) => {
 
       <Box style={{ display: 'flex', height: '300px', width: '100%', marginBottom }}>
         <Box style={{ width: '100% ' }}>
-          <MapContainer
-            zoom={ mapProps.zoom}
-            center={ props.value?.lat && props.value?.lng ? [props.value?.lat, props.value?.lng ] :  mapProps.center as LatLngTuple}
-            ref={setMap}
-            style={{ height: '300px', zIndex: 299 }}
-          >
-            <TileLayer
-              attribution={config?.tileLayer?.attribution || mapProps.tileAttribution}
-              url={config?.tileLayer?.url || mapProps.tileUrl}
-              accessToken={mapProps.tileAccessToken}
-            />
-            {location && <Marker position={[location?.lat, location?.lng]} icon={customIcon} />}
-          </MapContainer>
+          {configLoaded && config && (() => {
+            const mapZoom = config?.defaultMap?.zoom || 15;
+            const mapMaxZoom = config?.defaultMap?.maxZoom || 18;
+            const mapMinZoom = config?.defaultMap?.minZoom || 5;
+
+            // Solo usar las coordenadas por defecto si no hay valor inicial
+            const initialCenter: LatLngTuple = props.value?.lat && props.value?.lng
+              ? [props.value.lat, props.value.lng] as LatLngTuple
+              : [
+                  config?.defaultMap?.center?.lat || 14.557316602350959,
+                  config?.defaultMap?.center?.lng || -90.73227524766911
+                ] as LatLngTuple;
+
+            return (
+              <MapContainer
+                key={`map-${mapZoom}-${mapMaxZoom}-${mapMinZoom}`}
+                zoom={mapZoom}
+                maxZoom={mapMaxZoom}
+                minZoom={mapMinZoom}
+                center={initialCenter}
+                ref={setMap}
+                style={{ height: '300px', zIndex: 299 }}
+              >
+                <TileLayer
+                  attribution={config?.tileLayer?.attribution || '© OpenStreetMap contributors'}
+                  url={config?.tileLayer?.url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
+                />
+                {location && <Marker position={[location?.lat, location?.lng]} icon={customIcon} />}
+              </MapContainer>
+            );
+          })()}
+          {(!configLoaded || loading) && (
+            <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+              <Loader />
+            </Box>
+          )}
         </Box>
       </Box>
 

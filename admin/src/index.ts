@@ -78,7 +78,7 @@ export default {
                         defaultMessage: "Confirm",
                       },
                     },
-                  }                
+                  }
                 ],
               },
             ],
