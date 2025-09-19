@@ -58,15 +58,25 @@ const Input = (props) => {
   }, [location]);
   async function searchLocation(e) {
     let search = searchRef.current?.value;
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${search}&format=json`
-    );
-    const data = await response.json();
-    if (data.length > 0) {
-      let lat = parseFloat(data[0].lat);
-      let lng = parseFloat(data[0].lon);
-      setLocation({ lat, lng });
-      map.panTo({ lat, lng });
+    if (!search) {
+      return;
+    }
+    try {
+      const response = await fetch(
+        `/api/geocode/search?q=${encodeURIComponent(search)}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data.length > 0) {
+        let lat = parseFloat(data[0].lat);
+        let lng = parseFloat(data[0].lon);
+        setLocation({ lat, lng });
+        map.panTo({ lat, lng });
+      }
+    } catch (error) {
+      console.error("Error searching location:", error);
     }
   }
   async function setLatLng() {

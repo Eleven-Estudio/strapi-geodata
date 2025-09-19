@@ -85,15 +85,31 @@ const Input: React.FC<InputProps> = (props) => {
 
   async function searchLocation(e: React.MouseEvent) {
     let search = searchRef.current?.value;
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${search}&format=json`
-    );
-    const data = await response.json();
-    if (data.length > 0) {
-      let lat = parseFloat(data[0].lat);
-      let lng = parseFloat(data[0].lon);
-      setLocation({ lat, lng });
-      map.panTo({ lat, lng });
+
+    if (!search) {
+      return;
+    }
+
+    try {
+      // Usar el proxy local de Strapi en lugar de llamar directamente a Nominatim
+      const response = await fetch(
+        `/api/geocode/search?q=${encodeURIComponent(search)}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.length > 0) {
+        let lat = parseFloat(data[0].lat);
+        let lng = parseFloat(data[0].lon);
+        setLocation({ lat, lng });
+        map.panTo({ lat, lng });
+      }
+    } catch (error) {
+      console.error('Error searching location:', error);
+      // Opcional: mostrar mensaje de error al usuario
     }
   }
 
