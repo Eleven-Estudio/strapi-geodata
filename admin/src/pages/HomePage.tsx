@@ -10,13 +10,6 @@ import {
   NumberInput,
   Toggle,
   Button,
-  Grid,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Divider,
-  Alert,
   Textarea
 } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
@@ -103,16 +96,8 @@ const HomePage = () => {
     try {
       setLoading(true);
       setError('');
-
-      // Generar la configuración para plugins.ts
-      const configText = `geodata: {
-  enabled: true,
-  config: ${JSON.stringify(config, null, 4)}
-}`;
-
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-
     } catch (err) {
       setError('Error al guardar la configuración');
       console.error('Save error:', err);
@@ -123,7 +108,7 @@ const HomePage = () => {
 
   return (
     <Main>
-      <Box style={{ padding: '2rem' }}>
+      <Box style={{ padding: '2rem', maxWidth: '1200px' }}>
         {/* Header */}
         <Box style={{ marginBottom: '2rem' }}>
           <Typography variant="alpha" style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
@@ -137,291 +122,309 @@ const HomePage = () => {
 
         {/* Alerts */}
         {saved && (
-          <Alert
-            closeLabel="Cerrar"
-            title="Guardado"
-            variant="success"
-            style={{ marginBottom: '1rem' }}
-            onClose={() => setSaved(false)}
-          >
-            Configuración guardada correctamente. Reinicia Strapi para aplicar los cambios.
-          </Alert>
+          <Box style={{
+            padding: '1rem',
+            backgroundColor: '#d4edda',
+            border: '1px solid #c3e6cb',
+            borderRadius: '4px',
+            marginBottom: '1rem',
+            color: '#155724'
+          }}>
+            <Typography variant="beta" style={{ fontWeight: '600' }}>
+              ✅ Guardado
+            </Typography>
+            <Typography variant="gamma">
+              Configuración guardada correctamente. Reinicia Strapi para aplicar los cambios.
+            </Typography>
+          </Box>
         )}
 
         {error && (
-          <Alert
-            closeLabel="Cerrar"
-            title="Error"
-            variant="danger"
-            style={{ marginBottom: '1rem' }}
-            onClose={() => setError('')}
-          >
-            {error}
-          </Alert>
+          <Box style={{
+            padding: '1rem',
+            backgroundColor: '#f8d7da',
+            border: '1px solid #f5c6cb',
+            borderRadius: '4px',
+            marginBottom: '1rem',
+            color: '#721c24'
+          }}>
+            <Typography variant="beta" style={{ fontWeight: '600' }}>
+              ❌ Error
+            </Typography>
+            <Typography variant="gamma">
+              {error}
+            </Typography>
+          </Box>
         )}
 
-        <Grid gap={6}>
+        {/* Configuración en una sola columna */}
+        <Box style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+
           {/* Configuración del Mapa */}
-          <Grid.Item col={6}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Configuración del Mapa</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <Typography variant="beta" style={{ marginBottom: '0.5rem' }}>
-                    Centro por Defecto
-                  </Typography>
+          <Box style={{
+            padding: '1.5rem',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff'
+          }}>
+            <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
+              🗺️ Configuración del Mapa
+            </Typography>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Typography variant="beta" style={{ marginBottom: '0.5rem' }}>
+                Centro por Defecto
+              </Typography>
 
-                  <NumberInput
-                    label="Latitud"
-                    name="defaultMap.center.lat"
-                    value={config.defaultMap.center.lat}
-                    onValueChange={(value: number) => updateConfig('defaultMap.center.lat', value)}
-                    step={0.000001}
-                  />
+              <NumberInput
+                label="Latitud"
+                name="defaultMap.center.lat"
+                value={config.defaultMap.center.lat}
+                onValueChange={(value: number) => updateConfig('defaultMap.center.lat', value)}
+                step={0.000001}
+              />
 
-                  <NumberInput
-                    label="Longitud"
-                    name="defaultMap.center.lng"
-                    value={config.defaultMap.center.lng}
-                    onValueChange={(value: number) => updateConfig('defaultMap.center.lng', value)}
-                    step={0.000001}
-                  />
+              <NumberInput
+                label="Longitud"
+                name="defaultMap.center.lng"
+                value={config.defaultMap.center.lng}
+                onValueChange={(value: number) => updateConfig('defaultMap.center.lng', value)}
+                step={0.000001}
+              />
 
-                  <Divider />
+              <Typography variant="beta" style={{ marginBottom: '0.5rem', marginTop: '1rem' }}>
+                Niveles de Zoom
+              </Typography>
 
-                  <Typography variant="beta" style={{ marginBottom: '0.5rem' }}>
-                    Niveles de Zoom
-                  </Typography>
+              <NumberInput
+                label="Zoom Inicial"
+                name="defaultMap.zoom"
+                value={config.defaultMap.zoom}
+                onValueChange={(value: number) => updateConfig('defaultMap.zoom', value)}
+                min={1}
+                max={20}
+              />
 
-                  <NumberInput
-                    label="Zoom Inicial"
-                    name="defaultMap.zoom"
-                    value={config.defaultMap.zoom}
-                    onValueChange={(value: number) => updateConfig('defaultMap.zoom', value)}
-                    min={1}
-                    max={20}
-                  />
+              <NumberInput
+                label="Zoom Máximo"
+                name="defaultMap.maxZoom"
+                value={config.defaultMap.maxZoom}
+                onValueChange={(value: number) => updateConfig('defaultMap.maxZoom', value)}
+                min={1}
+                max={20}
+              />
 
-                  <NumberInput
-                    label="Zoom Máximo"
-                    name="defaultMap.maxZoom"
-                    value={config.defaultMap.maxZoom}
-                    onValueChange={(value: number) => updateConfig('defaultMap.maxZoom', value)}
-                    min={1}
-                    max={20}
-                  />
-
-                  <NumberInput
-                    label="Zoom Mínimo"
-                    name="defaultMap.minZoom"
-                    value={config.defaultMap.minZoom}
-                    onValueChange={(value: number) => updateConfig('defaultMap.minZoom', value)}
-                    min={1}
-                    max={20}
-                  />
-                </Box>
-              </CardBody>
-            </Card>
-          </Grid.Item>
+              <NumberInput
+                label="Zoom Mínimo"
+                name="defaultMap.minZoom"
+                value={config.defaultMap.minZoom}
+                onValueChange={(value: number) => updateConfig('defaultMap.minZoom', value)}
+                min={1}
+                max={20}
+              />
+            </Box>
+          </Box>
 
           {/* Configuración del Marcador */}
-          <Grid.Item col={6}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Marcador por Defecto</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <NumberInput
-                    label="Latitud del Marcador"
-                    name="defaultMarker.lat"
-                    value={config.defaultMarker.lat}
-                    onValueChange={(value: number) => updateConfig('defaultMarker.lat', value)}
-                    step={0.000001}
-                  />
+          <Box style={{
+            padding: '1.5rem',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff'
+          }}>
+            <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
+              📍 Marcador por Defecto
+            </Typography>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <NumberInput
+                label="Latitud del Marcador"
+                name="defaultMarker.lat"
+                value={config.defaultMarker.lat}
+                onValueChange={(value: number) => updateConfig('defaultMarker.lat', value)}
+                step={0.000001}
+              />
 
-                  <NumberInput
-                    label="Longitud del Marcador"
-                    name="defaultMarker.lng"
-                    value={config.defaultMarker.lng}
-                    onValueChange={(value: number) => updateConfig('defaultMarker.lng', value)}
-                    step={0.000001}
-                  />
+              <NumberInput
+                label="Longitud del Marcador"
+                name="defaultMarker.lng"
+                value={config.defaultMarker.lng}
+                onValueChange={(value: number) => updateConfig('defaultMarker.lng', value)}
+                step={0.000001}
+              />
 
-                  <Toggle
-                    label="Marcador Arrastrable"
-                    name="defaultMarker.draggable"
-                    onLabel="Sí"
-                    offLabel="No"
-                    checked={config.defaultMarker.draggable}
-                    onChange={() => updateConfig('defaultMarker.draggable', !config.defaultMarker.draggable)}
-                  />
-                </Box>
-              </CardBody>
-            </Card>
-          </Grid.Item>
+              <Toggle
+                label="Marcador Arrastrable"
+                name="defaultMarker.draggable"
+                onLabel="Sí"
+                offLabel="No"
+                checked={config.defaultMarker.draggable}
+                onChange={() => updateConfig('defaultMarker.draggable', !config.defaultMarker.draggable)}
+              />
+            </Box>
+          </Box>
 
           {/* Configuración de Búsqueda */}
-          <Grid.Item col={6}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Configuración de Búsqueda</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <Toggle
-                    label="Habilitar Búsqueda"
-                    name="search.enabled"
-                    onLabel="Sí"
-                    offLabel="No"
-                    checked={config.search.enabled}
-                    onChange={() => updateConfig('search.enabled', !config.search.enabled)}
-                  />
+          <Box style={{
+            padding: '1.5rem',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff'
+          }}>
+            <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
+              🔍 Configuración de Búsqueda
+            </Typography>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Toggle
+                label="Habilitar Búsqueda"
+                name="search.enabled"
+                onLabel="Sí"
+                offLabel="No"
+                checked={config.search.enabled}
+                onChange={() => updateConfig('search.enabled', !config.search.enabled)}
+              />
 
-                  <TextInput
-                    label="Placeholder de Búsqueda"
-                    name="search.placeholder"
-                    value={config.search.placeholder}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('search.placeholder', e.target.value)}
-                  />
+              <TextInput
+                label="Placeholder de Búsqueda"
+                name="search.placeholder"
+                value={config.search.placeholder}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('search.placeholder', e.target.value)}
+              />
 
-                  <NumberInput
-                    label="Límite de Resultados"
-                    name="search.limit"
-                    value={config.search.limit}
-                    onValueChange={(value: number) => updateConfig('search.limit', value)}
-                    min={1}
-                    max={20}
-                  />
+              <NumberInput
+                label="Límite de Resultados"
+                name="search.limit"
+                value={config.search.limit}
+                onValueChange={(value: number) => updateConfig('search.limit', value)}
+                min={1}
+                max={20}
+              />
 
-                  <TextInput
-                    label="Código de País"
-                    name="search.countryCode"
-                    value={config.search.countryCode}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('search.countryCode', e.target.value)}
-                    placeholder="ej: gt, mx, es, us"
-                  />
-                </Box>
-              </CardBody>
-            </Card>
-          </Grid.Item>
+              <TextInput
+                label="Código de País"
+                name="search.countryCode"
+                value={config.search.countryCode}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('search.countryCode', e.target.value)}
+                placeholder="ej: gt, mx, es, us"
+              />
+            </Box>
+          </Box>
 
           {/* Configuración de Interfaz */}
-          <Grid.Item col={6}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Configuración de Interfaz</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <Toggle
-                    label="Mostrar Campos de Coordenadas"
-                    name="ui.showCoordinatesInput"
-                    onLabel="Sí"
-                    offLabel="No"
-                    checked={config.ui.showCoordinatesInput}
-                    onChange={() => updateConfig('ui.showCoordinatesInput', !config.ui.showCoordinatesInput)}
-                  />
+          <Box style={{
+            padding: '1.5rem',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff'
+          }}>
+            <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
+              🎨 Configuración de Interfaz
+            </Typography>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Toggle
+                label="Mostrar Campos de Coordenadas"
+                name="ui.showCoordinatesInput"
+                onLabel="Sí"
+                offLabel="No"
+                checked={config.ui.showCoordinatesInput}
+                onChange={() => updateConfig('ui.showCoordinatesInput', !config.ui.showCoordinatesInput)}
+              />
 
-                  <Toggle
-                    label="Mostrar Caja de Búsqueda"
-                    name="ui.showSearchBox"
-                    onLabel="Sí"
-                    offLabel="No"
-                    checked={config.ui.showSearchBox}
-                    onChange={() => updateConfig('ui.showSearchBox', !config.ui.showSearchBox)}
-                  />
+              <Toggle
+                label="Mostrar Caja de Búsqueda"
+                name="ui.showSearchBox"
+                onLabel="Sí"
+                offLabel="No"
+                checked={config.ui.showSearchBox}
+                onChange={() => updateConfig('ui.showSearchBox', !config.ui.showSearchBox)}
+              />
 
-                  <Toggle
-                    label="Mostrar Valor Actual"
-                    name="ui.showCurrentValue"
-                    onLabel="Sí"
-                    offLabel="No"
-                    checked={config.ui.showCurrentValue}
-                    onChange={() => updateConfig('ui.showCurrentValue', !config.ui.showCurrentValue)}
-                  />
+              <Toggle
+                label="Mostrar Valor Actual"
+                name="ui.showCurrentValue"
+                onLabel="Sí"
+                offLabel="No"
+                checked={config.ui.showCurrentValue}
+                onChange={() => updateConfig('ui.showCurrentValue', !config.ui.showCurrentValue)}
+              />
 
-                  <Box>
-                    <Typography variant="pi" style={{ marginBottom: '0.5rem', fontWeight: '600' }}>
-                      Idioma
-                    </Typography>
-                    <Box style={{ display: 'flex', gap: '1rem' }}>
-                      <Button
-                        variant={config.ui.language === 'es' ? 'default' : 'secondary'}
-                        onClick={() => updateConfig('ui.language', 'es')}
-                        size="S"
-                      >
-                        Español
-                      </Button>
-                      <Button
-                        variant={config.ui.language === 'en' ? 'default' : 'secondary'}
-                        onClick={() => updateConfig('ui.language', 'en')}
-                        size="S"
-                      >
-                        English
-                      </Button>
-                    </Box>
-                  </Box>
+              <Box>
+                <Typography variant="pi" style={{ marginBottom: '0.5rem', fontWeight: '600' }}>
+                  Idioma
+                </Typography>
+                <Box style={{ display: 'flex', gap: '1rem' }}>
+                  <Button
+                    variant={config.ui.language === 'es' ? 'default' : 'secondary'}
+                    onClick={() => updateConfig('ui.language', 'es')}
+                    size="S"
+                  >
+                    Español
+                  </Button>
+                  <Button
+                    variant={config.ui.language === 'en' ? 'default' : 'secondary'}
+                    onClick={() => updateConfig('ui.language', 'en')}
+                    size="S"
+                  >
+                    English
+                  </Button>
                 </Box>
-              </CardBody>
-            </Card>
-          </Grid.Item>
+              </Box>
+            </Box>
+          </Box>
 
           {/* Configuración de Tiles */}
-          <Grid.Item col={12}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Proveedor de Mapas</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <TextInput
-                    label="URL del Tile Layer"
-                    name="tileLayer.url"
-                    value={config.tileLayer.url}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('tileLayer.url', e.target.value)}
-                    placeholder="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
+          <Box style={{
+            padding: '1.5rem',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff'
+          }}>
+            <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
+              🌍 Proveedor de Mapas
+            </Typography>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <TextInput
+                label="URL del Tile Layer"
+                name="tileLayer.url"
+                value={config.tileLayer.url}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('tileLayer.url', e.target.value)}
+                placeholder="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
 
-                  <TextInput
-                    label="Atribución"
-                    name="tileLayer.attribution"
-                    value={config.tileLayer.attribution}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('tileLayer.attribution', e.target.value)}
-                    placeholder="© OpenStreetMap contributors"
-                  />
-                </Box>
-              </CardBody>
-            </Card>
-          </Grid.Item>
+              <TextInput
+                label="Atribución"
+                name="tileLayer.attribution"
+                value={config.tileLayer.attribution}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateConfig('tileLayer.attribution', e.target.value)}
+                placeholder="© OpenStreetMap contributors"
+              />
+            </Box>
+          </Box>
 
           {/* Configuración Generada */}
-          <Grid.Item col={12}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Configuración para plugins.ts</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Typography variant="gamma" style={{ marginBottom: '1rem' }}>
-                  Copia esta configuración en tu archivo <code>config/plugins.ts</code>:
-                </Typography>
-                <Textarea
-                  label=""
-                  name="generatedConfig"
-                  value={`geodata: {
+          <Box style={{
+            padding: '1.5rem',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff'
+          }}>
+            <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
+              📄 Configuración para plugins.ts
+            </Typography>
+            <Typography variant="gamma" style={{ marginBottom: '1rem' }}>
+              Copia esta configuración en tu archivo <code>config/plugins.ts</code>:
+            </Typography>
+            <Textarea
+              label=""
+              name="generatedConfig"
+              value={`geodata: {
   enabled: true,
   config: ${JSON.stringify(config, null, 4)}
 }`}
-                  rows={20}
-                  style={{ fontFamily: 'monospace', fontSize: '0.875rem' }}
-                  disabled
-                />
-              </CardBody>
-            </Card>
-          </Grid.Item>
-        </Grid>
+              rows={20}
+              style={{ fontFamily: 'monospace', fontSize: '0.875rem' }}
+              disabled
+            />
+          </Box>
+        </Box>
 
         {/* Botones de Acción */}
         <Box style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
@@ -447,7 +450,7 @@ const HomePage = () => {
         {/* Información adicional */}
         <Box style={{ marginTop: '3rem', padding: '1.5rem', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
           <Typography variant="beta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
-            Instrucciones de Uso:
+            📖 Instrucciones de Uso:
           </Typography>
           <Typography variant="gamma" style={{ lineHeight: '1.6', marginBottom: '1rem' }}>
             1. Modifica los valores de configuración usando los formularios arriba<br/>
@@ -457,7 +460,7 @@ const HomePage = () => {
           </Typography>
 
           <Typography variant="beta" style={{ fontWeight: '600', marginBottom: '0.5rem', marginTop: '1.5rem' }}>
-            Campos Requeridos:
+            🔧 Campos Requeridos:
           </Typography>
           <Typography variant="gamma" style={{ lineHeight: '1.6' }}>
             Para el correcto funcionamiento, crea estos campos: <strong>lat</strong> (float), <strong>lng</strong> (float), y <strong>geohash</strong> (string).
@@ -468,7 +471,7 @@ const HomePage = () => {
         {/* Créditos */}
         <Box style={{ marginTop: '2rem', padding: '1rem', borderTop: '1px solid #ddd' }}>
           <Typography variant="beta" style={{ fontWeight: '600', marginBottom: '0.5rem' }}>
-            Autor Original:
+            👨‍💻 Autor Original:
           </Typography>
           <Typography variant="gamma" style={{ lineHeight: '1.6' }}>
             Plugin original por <Typography style={{ fontWeight: "bold" }}>red-made</Typography>. Visita{' '}
