@@ -22,7 +22,7 @@ const customIcon = new L__default.default.Icon({
   shadowAnchor: [12, 41]
 });
 const mapProps = {
-  zoom: 12,
+  zoom: 15,
   center: [14.557316602350959, -90.73227524766911],
   tileUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   tileAttribution: "OSM attribution",

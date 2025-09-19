@@ -5,7 +5,7 @@ const admin = require("@strapi/strapi/admin");
 const reactRouterDom = require("react-router-dom");
 const designSystem = require("@strapi/design-system");
 const reactIntl = require("react-intl");
-const index = require("./index-Be9GsKBT.js");
+const index = require("./index-CcqIQdb9.js");
 const HomePage = () => {
   reactIntl.useIntl();
   return /* @__PURE__ */ jsxRuntime.jsx(designSystem.Main, { children: /* @__PURE__ */ jsxRuntime.jsxs(

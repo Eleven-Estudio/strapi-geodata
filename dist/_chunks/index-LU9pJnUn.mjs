@@ -2606,7 +2606,7 @@ const index = {
         defaultMessage: PLUGIN_ID
       },
       Component: async () => {
-        const { App } = await import("./App-CSJtDC2W.mjs");
+        const { App } = await import("./App-C8e807kf.mjs");
         return App;
       }
     });
@@ -2627,7 +2627,7 @@ const index = {
       isResizable: true,
       icon: ForwardRef,
       components: {
-        Input: async () => import("./Input-CTAIXRLo.mjs")
+        Input: async () => import("./Input-DWmm_AkQ.mjs")
       },
       options: {
         base: [
