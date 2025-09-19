@@ -17,8 +17,8 @@ import {
   CardTitle,
   Divider,
   Alert,
-  Select,
-  Option,
+  SingleSelect,
+  SingleSelectOption,
   Textarea
 } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
@@ -345,15 +345,15 @@ const HomePage = () => {
                     onChange={() => updateConfig('ui.showCurrentValue', !config.ui.showCurrentValue)}
                   />
 
-                  <Select
+                  <SingleSelect
                     label="Idioma"
                     name="ui.language"
                     value={config.ui.language}
-                    onChange={(value: string) => updateConfig('ui.language', value)}
+                    onSelectionChange={(value: string) => updateConfig('ui.language', value)}
                   >
-                    <Option value="es">Español</Option>
-                    <Option value="en">English</Option>
-                  </Select>
+                    <SingleSelectOption value="es">Español</SingleSelectOption>
+                    <SingleSelectOption value="en">English</SingleSelectOption>
+                  </SingleSelect>
                 </Box>
               </CardBody>
             </Card>
