@@ -124,8 +124,6 @@ const HomePage = () => {
         {saved && (
           <Box style={{
             padding: '1rem',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
             marginBottom: '1rem'
           }}>
             <Typography variant="beta" style={{ fontWeight: '600' }}>
@@ -140,8 +138,6 @@ const HomePage = () => {
         {error && (
           <Box style={{
             padding: '1rem',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
             marginBottom: '1rem'
           }}>
             <Typography variant="beta" style={{ fontWeight: '600' }}>
@@ -158,9 +154,7 @@ const HomePage = () => {
 
           {/* Configuración del Mapa */}
           <Box style={{
-            padding: '1.5rem',
-            border: '1px solid #ddd',
-            borderRadius: '8px'
+            padding: '1.5rem'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🗺️ Configuración del Mapa
@@ -221,9 +215,7 @@ const HomePage = () => {
 
           {/* Configuración del Marcador */}
           <Box style={{
-            padding: '1.5rem',
-            border: '1px solid #ddd',
-            borderRadius: '8px'
+            padding: '1.5rem'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               📍 Marcador por Defecto
@@ -258,9 +250,7 @@ const HomePage = () => {
 
           {/* Configuración de Búsqueda */}
           <Box style={{
-            padding: '1.5rem',
-            border: '1px solid #ddd',
-            borderRadius: '8px'
+            padding: '1.5rem'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🔍 Configuración de Búsqueda
@@ -303,9 +293,7 @@ const HomePage = () => {
 
           {/* Configuración de Interfaz */}
           <Box style={{
-            padding: '1.5rem',
-            border: '1px solid #ddd',
-            borderRadius: '8px'
+            padding: '1.5rem'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🎨 Configuración de Interfaz
@@ -364,9 +352,7 @@ const HomePage = () => {
 
           {/* Configuración de Tiles */}
           <Box style={{
-            padding: '1.5rem',
-            border: '1px solid #ddd',
-            borderRadius: '8px'
+            padding: '1.5rem'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               🌍 Proveedor de Mapas
@@ -392,9 +378,7 @@ const HomePage = () => {
 
           {/* Configuración Generada */}
           <Box style={{
-            padding: '1.5rem',
-            border: '1px solid #ddd',
-            borderRadius: '8px'
+            padding: '1.5rem'
           }}>
             <Typography variant="delta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
               📄 Configuración para plugins.ts
@@ -438,7 +422,7 @@ const HomePage = () => {
         </Box>
 
         {/* Información adicional */}
-        <Box style={{ marginTop: '3rem', padding: '1.5rem', borderRadius: '8px', border: '1px solid #ddd' }}>
+        <Box style={{ marginTop: '3rem', padding: '1.5rem' }}>
           <Typography variant="beta" style={{ fontWeight: '600', marginBottom: '1rem' }}>
             📖 Instrucciones de Uso:
           </Typography>

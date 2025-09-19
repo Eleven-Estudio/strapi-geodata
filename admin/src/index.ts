@@ -1,14 +1,14 @@
 import { getTranslation } from './utils/getTranslation';
 import { PLUGIN_ID } from './pluginId';
 import { Initializer } from './components/Initializer';
-import PluginIcon from './components/PluginIcon';
 import * as yup from 'yup';
+import { PinMap } from '@strapi/icons';
 
 export default {
   register(app: any) {
     app.addMenuLink({
       to: `plugins/${PLUGIN_ID}`,
-      icon: PluginIcon,
+      icon: PinMap,
       intlLabel: {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
@@ -34,7 +34,7 @@ export default {
       },
       default: 12,
       isResizable: true,
-      icon: PluginIcon,
+      icon: PinMap,
       components: {
         Input: async () => import('./components/Input'),
       },
