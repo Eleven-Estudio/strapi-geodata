@@ -8,6 +8,47 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       .service('service')
       .getWelcomeMessage();
   },
+
+  getConfig(ctx) {
+    // Obtener la configuración del plugin desde Strapi
+    const pluginConfig = strapi.config.get('plugin.geodata', {});
+
+    // Configuración por defecto en caso de que no esté definida
+    const defaultConfig = {
+      defaultMap: {
+        center: { lat: 14.557316602350959, lng: -90.73227524766911 },
+        zoom: 15,
+        maxZoom: 18,
+        minZoom: 5
+      },
+      defaultMarker: {
+        lat: 14.557316602350959,
+        lng: -90.73227524766911,
+        draggable: true
+      },
+      search: {
+        enabled: true,
+        placeholder: "Buscar dirección...",
+        limit: 5,
+        countryCode: 'gt'
+      },
+      ui: {
+        showCoordinatesInput: true,
+        showSearchBox: true,
+        showCurrentValue: true,
+        language: 'es'
+      },
+      tileLayer: {
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '© OpenStreetMap contributors'
+      }
+    };
+
+    // Merge de configuración por defecto con la configuración del usuario
+    const config = { ...defaultConfig, ...pluginConfig };
+
+    ctx.body = config;
+  },
 });
 
 export default controller;

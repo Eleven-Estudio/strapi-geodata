@@ -1,5 +1,6 @@
-import { useRef, useEffect, forwardRef } from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+"use strict";
+const react = require("react");
+const jsxRuntime = require("react/jsx-runtime");
 const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
   const v = glob[path];
   if (v) {
@@ -19,13 +20,13 @@ const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
 const PLUGIN_ID = "geodata";
 const getTranslation = (id) => `${PLUGIN_ID}.${id}`;
 const Initializer = ({ setPlugin }) => {
-  const ref = useRef(setPlugin);
-  useEffect(() => {
+  const ref = react.useRef(setPlugin);
+  react.useEffect(() => {
     ref.current(PLUGIN_ID);
   }, []);
   return null;
 };
-const PluginIcon = (props, ref) => /* @__PURE__ */ jsx(
+const PluginIcon = (props, ref) => /* @__PURE__ */ jsxRuntime.jsx(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -35,39 +36,39 @@ const PluginIcon = (props, ref) => /* @__PURE__ */ jsx(
     fill: "currentColor",
     ref,
     ...props,
-    children: /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsxs("g", { id: "Layer_1", children: [
-      /* @__PURE__ */ jsxs("g", { children: [
-        /* @__PURE__ */ jsx(
+    children: /* @__PURE__ */ jsxRuntime.jsx("g", { children: /* @__PURE__ */ jsxRuntime.jsxs("g", { id: "Layer_1", children: [
+      /* @__PURE__ */ jsxRuntime.jsxs("g", { children: [
+        /* @__PURE__ */ jsxRuntime.jsx(
           "path",
           {
             d: "M11.46,31.2c-2.76-.06-5.57.19-8.33.04-.07-.96.98-1.96,1.38-2.89.11-.16.39-.11.66-.11,7.13-.13,14.31.26,21.45.08l.07-.13c-.36-.8-1.31-2.14-1.55-2.77-.42-1.11.56-.7,2.06-.87.03,0,.21.1.53-.07.62.9,3.17,4.69,3.36,5.14.42,1.01-.58,1.55-1.46,1.67-.99.13-7.29-.25-8.98,0",
             fill: "#70c2eb"
           }
         ),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsxRuntime.jsx(
           "path",
           {
             d: "M22.59,3.84s-.04-.04-.06-.06c-.8.4-1.92-.96-3.71-1.25-6.2-.99-10.84,4.45-9.67,10.03.06.27.63,1.77.8,2.17.36.89,1.31,1.85.23,1.85-1.09-2.14-2.78-4.93-2.77-7.31.03-4.3,3.45-8.11,7.75-8.54,2.74-.28,5.6.96,7.37,3.06.02.02.04.04.06.06Z",
             fill: "#f9b4b0"
           }
         ),
-        /* @__PURE__ */ jsxs("g", { children: [
-          /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsxRuntime.jsxs("g", { children: [
+          /* @__PURE__ */ jsxRuntime.jsx(
             "path",
             {
               d: "M22.59,3.84c1.54,1.85,2.37,4.83,1.78,7.17-.46,1.84-6.65,13.43-7.5,14.41-.6.69-1.08.73-1.69.06-.62-.68-4.25-7.44-5-8.89,1.08,0,.13-.95-.23-1.85-.16-.4-.74-1.9-.8-2.17-1.18-5.58,3.46-11.02,9.67-10.03,1.8.29,2.92,1.64,3.71,1.25.02.02.04.04.06.06Z",
               fill: "#f47e77"
             }
           ),
-          /* @__PURE__ */ jsxs("g", { children: [
-            /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsxRuntime.jsxs("g", { children: [
+            /* @__PURE__ */ jsxRuntime.jsx(
               "path",
               {
                 d: "M15.74,4.89c5.54-.33,6.04,8.08.5,8.41-5.54.33-6.03-8.08-.5-8.41Z",
                 fill: "#fff"
               }
             ),
-            /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsxRuntime.jsx(
               "path",
               {
                 d: "M15.93,13.48c-1.5,0-2.73-.64-3.51-1.82-.89-1.35-1-3.24-.27-4.69.68-1.35,1.95-2.15,3.59-2.24h0c1.33-.08,2.48.33,3.32,1.18.74.75,1.19,1.79,1.26,2.94.07,1.14-.25,2.23-.9,3.06-.73.94-1.83,1.48-3.16,1.56-.11,0-.21,0-.32,0ZM15.74,4.89v.16c-1.5.09-2.68.82-3.3,2.06-.68,1.35-.57,3.1.26,4.36.76,1.16,2.02,1.75,3.53,1.66,1.92-.11,3.92-1.5,3.75-4.27-.16-2.78-2.31-3.92-4.23-3.81v-.16Z",
@@ -77,29 +78,29 @@ const PluginIcon = (props, ref) => /* @__PURE__ */ jsx(
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("g", { children: [
-        /* @__PURE__ */ jsx(
+      /* @__PURE__ */ jsxRuntime.jsxs("g", { children: [
+        /* @__PURE__ */ jsxRuntime.jsx(
           "path",
           {
             d: "M28.82,31.48c-.65,0-1.56-.02-2.55-.05-2.06-.05-4.62-.12-5.58.02-.06,0-.12.01-.17.01-.04,0-.08,0-.12,0-.09.01-.17-.05-.18-.14-.01-.09.05-.17.14-.18.05,0,.1,0,.15-.01.05,0,.09,0,.14-.01.99-.14,3.46-.08,5.64-.02,1.51.04,2.94.08,3.34.02.48-.06,1.08-.28,1.32-.68.13-.22.13-.47.01-.75-.17-.42-2.62-4.06-3.34-5.11-.13-.19-.26-.41-.4-.64-.44-.72-.98-1.62-1.6-1.8-.25-.07-1.46-.05-2.53-.03-.94.02-1.84.04-2.29,0-.09,0-.16-.09-.15-.18,0-.09.09-.16.18-.15.44.03,1.36.01,2.26,0,1.45-.03,2.35-.04,2.63.04.74.22,1.29,1.14,1.78,1.95.14.23.27.44.39.62.37.54,3.17,4.66,3.38,5.17.16.38.14.74-.03,1.05-.25.43-.83.75-1.56.85-.16.02-.46.03-.84.03Z",
             fill: "#355d76"
           }
         ),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsxRuntime.jsx(
           "path",
           {
             d: "M5.1,31.45c-.66,0-1.32-.01-1.97-.05-.06,0-.12,0-.19,0-.68-.03-1.71-.08-2.12-.66-.19-.27-.23-.61-.11-1.02.08-.29,1.65-2.71,2.32-3.74.88-1.35,2.26-3.44,2.45-3.64.66-.69,2.23-.62,3.61-.56.65.03,1.27.06,1.7,0,.09-.01.17.05.19.14.01.09-.05.17-.14.19-.46.06-1.09.03-1.76,0-1.31-.06-2.8-.13-3.35.46-.37.39-4.58,6.89-4.7,7.25-.09.31-.07.56.06.74.32.45,1.29.49,1.87.52.07,0,.13,0,.2,0,1.55.08,3.14.04,4.68,0,1.19-.03,2.43-.07,3.63-.04h.13c.09-.02.17.05.18.14,0,.09-.06.17-.15.18h-.14s-.01.01-.02.01c-1.2-.03-2.43,0-3.62.04-.9.02-1.82.05-2.74.05Z",
             fill: "#355d76"
           }
         ),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsxRuntime.jsx(
           "path",
           {
             d: "M16,26.12c-.31,0-.61-.17-.95-.53-.66-.72-4.4-7.71-5.02-8.93-.16-.31-.33-.63-.5-.96-1.07-2.04-2.29-4.34-2.28-6.43.01-2.13.84-4.2,2.32-5.83,1.48-1.64,3.47-2.66,5.58-2.88,2.73-.28,5.68.95,7.51,3.11,0,0,0,0,.01.01.02.01.03.03.04.05.77.93,1.38,2.16,1.72,3.46.35,1.36.38,2.7.1,3.85-.45,1.81-6.61,13.41-7.54,14.48-.35.4-.66.59-.98.59,0,0,0,0-.01,0ZM15.17.89h0c-2.03.21-3.94,1.19-5.37,2.77-1.43,1.58-2.22,3.57-2.23,5.61-.01,2,1.19,4.27,2.24,6.27.18.34.35.66.51.97.77,1.5,4.37,8.2,4.97,8.86.26.29.49.43.7.43,0,0,0,0,0,0,.22,0,.46-.16.74-.48.88-1.01,7.04-12.63,7.47-14.34.55-2.19-.19-5.15-1.75-7.02,0,0,0,0-.01-.01-.02-.01-.03-.03-.04-.04-1.77-2.09-4.61-3.26-7.23-3Z",
             fill: "#396078"
           }
         ),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsxRuntime.jsx(
           "path",
           {
             d: "M25.32,25.35c.42.96,1.1,1.8,1.54,2.76.05.11-.03.21-.08.29-7.12.45-14.44-.21-21.61.01-.14,0-.23-.16-.16-.27.09-.14,1.67-2.93,1.73-2.97.07-.1.07-.1.16-.09.08.02.16.07.18.12,0,.18-1.64,2.89-1.75,3.12,0,0-.16-.27-.16-.27,7.16-.13,14.31.26,21.45.08l-.15.09.07-.13s0,.17,0,.17c-.22-.47-.5-.92-.77-1.36-.28-.47-.57-.9-.78-1.42-.04-.11-.12-.3-.1-.4.02-.05.11-.09.19-.09.09,0,.09,0,.15.11.03.07.07.17.1.25h0Z",
@@ -110,7 +111,7 @@ const PluginIcon = (props, ref) => /* @__PURE__ */ jsx(
     ] }) })
   }
 );
-const ForwardRef = forwardRef(PluginIcon);
+const ForwardRef = react.forwardRef(PluginIcon);
 var map;
 try {
   map = Map;
@@ -949,15 +950,15 @@ function stubFalse() {
 }
 var stubFalse_1 = stubFalse;
 isBuffer$2.exports;
-(function(module, exports) {
+(function(module2, exports2) {
   var root2 = _root, stubFalse2 = stubFalse_1;
-  var freeExports = exports && !exports.nodeType && exports;
-  var freeModule = freeExports && true && module && !module.nodeType && module;
+  var freeExports = exports2 && !exports2.nodeType && exports2;
+  var freeModule = freeExports && true && module2 && !module2.nodeType && module2;
   var moduleExports = freeModule && freeModule.exports === freeExports;
   var Buffer = moduleExports ? root2.Buffer : void 0;
   var nativeIsBuffer = Buffer ? Buffer.isBuffer : void 0;
   var isBuffer2 = nativeIsBuffer || stubFalse2;
-  module.exports = isBuffer2;
+  module2.exports = isBuffer2;
 })(isBuffer$2, isBuffer$2.exports);
 var isBufferExports = isBuffer$2.exports;
 var baseGetTag$1 = _baseGetTag, isLength$1 = isLength_1, isObjectLike$1 = isObjectLike_1;
@@ -978,10 +979,10 @@ function baseUnary$1(func) {
 var _baseUnary = baseUnary$1;
 var _nodeUtil = { exports: {} };
 _nodeUtil.exports;
-(function(module, exports) {
+(function(module2, exports2) {
   var freeGlobal2 = _freeGlobal;
-  var freeExports = exports && !exports.nodeType && exports;
-  var freeModule = freeExports && true && module && !module.nodeType && module;
+  var freeExports = exports2 && !exports2.nodeType && exports2;
+  var freeModule = freeExports && true && module2 && !module2.nodeType && module2;
   var moduleExports = freeModule && freeModule.exports === freeExports;
   var freeProcess = moduleExports && freeGlobal2.process;
   var nodeUtil2 = function() {
@@ -994,7 +995,7 @@ _nodeUtil.exports;
     } catch (e) {
     }
   }();
-  module.exports = nodeUtil2;
+  module2.exports = nodeUtil2;
 })(_nodeUtil, _nodeUtil.exports);
 var _nodeUtilExports = _nodeUtil.exports;
 var baseIsTypedArray = _baseIsTypedArray, baseUnary = _baseUnary, nodeUtil = _nodeUtilExports;
@@ -2606,7 +2607,7 @@ const index = {
         defaultMessage: PLUGIN_ID
       },
       Component: async () => {
-        const { App } = await import("./App-DBvQsamM.mjs");
+        const { App } = await Promise.resolve().then(() => require("./App-DmLqcGgL.js"));
         return App;
       }
     });
@@ -2627,7 +2628,7 @@ const index = {
       isResizable: true,
       icon: ForwardRef,
       components: {
-        Input: async () => import("./Input-BqFFYA4P.mjs")
+        Input: async () => Promise.resolve().then(() => require("./Input-BqpPd0Va.js"))
       },
       options: {
         base: [
@@ -2695,7 +2696,7 @@ const index = {
     const { locales } = app;
     const importedTranslations = await Promise.all(
       locales.map((locale) => {
-        return __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./translations/en.json": () => import("./en-Byx4XI2L.mjs") }), `./translations/${locale}.json`, 3).then(({ default: data }) => {
+        return __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./translations/en.json": () => Promise.resolve().then(() => require("./en-B4KWt_jN.js")) }), `./translations/${locale}.json`, 3).then(({ default: data }) => {
           return {
             data: getTranslation(data),
             locale
@@ -2711,7 +2712,5 @@ const index = {
     return importedTranslations;
   }
 };
-export {
-  ForwardRef as F,
-  index as i
-};
+exports.ForwardRef = ForwardRef;
+exports.index = index;

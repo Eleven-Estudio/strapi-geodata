@@ -17,6 +17,7 @@ declare const _default: {
             strapi: import("@strapi/types/dist/core").Strapi;
         }) => {
             index(ctx: any): void;
+            getConfig(ctx: any): void;
         };
     };
     routes: {

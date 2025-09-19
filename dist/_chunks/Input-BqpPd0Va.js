@@ -21,7 +21,7 @@ const customIcon = new L__default.default.Icon({
   shadowSize: [41, 41],
   shadowAnchor: [12, 41]
 });
-const mapProps = {
+let mapProps = {
   zoom: 15,
   center: [14.557316602350959, -90.73227524766911],
   tileUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -31,9 +31,43 @@ const mapProps = {
 const Input = (props) => {
   const [map, setMap] = react.useState(null);
   const [location, setLocation] = react.useState(props.value);
+  const [config, setConfig] = react.useState(null);
+  const [loading, setLoading] = react.useState(true);
   const latRef = react.useRef(null);
   const lngRef = react.useRef(null);
   const searchRef = react.useRef(null);
+  react.useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        const response = await fetch("/geodata/config");
+        if (response.ok) {
+          const pluginConfig = await response.json();
+          setConfig(pluginConfig);
+          mapProps = {
+            zoom: pluginConfig.defaultMap?.zoom || 15,
+            center: [
+              pluginConfig.defaultMap?.center?.lat || 14.557316602350959,
+              pluginConfig.defaultMap?.center?.lng || -90.73227524766911
+            ],
+            tileUrl: pluginConfig.tileLayer?.url || "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            tileAttribution: pluginConfig.tileLayer?.attribution || "OSM attribution",
+            tileAccessToken: ""
+          };
+          if (!props.value && pluginConfig.defaultMarker) {
+            setLocation({
+              lat: pluginConfig.defaultMarker.lat,
+              lng: pluginConfig.defaultMarker.lng
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error loading plugin config:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadConfig();
+  }, []);
   const onMapClick = react.useCallback(
     (e) => {
       setLocation(e.latlng);
@@ -91,16 +125,26 @@ const Input = (props) => {
   }
   const marginBottom = "2rem";
   const display = "block";
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntime.jsx(designSystem.Box, { style: { display: "flex", justifyContent: "center", alignItems: "center", height: "200px" }, children: /* @__PURE__ */ jsxRuntime.jsx(designSystem.Loader, {}) });
+  }
   return /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { children: [
     /* @__PURE__ */ jsxRuntime.jsx(designSystem.Typography, { variant: "delta", style: { marginBottom, display }, children: props.label }),
     /* @__PURE__ */ jsxRuntime.jsx(designSystem.Typography, { variant: "omega", style: { marginBottom, display }, children: "Para establecer la ubicación, ingresa las coordenadas y haz clic en 'Establecer Ubicación', busca una dirección y presiona 'Buscar', o navega en el mapa y haz clic derecho" }),
-    /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { style: { display: "grid", gridTemplateColumns: "2fr 2fr 1fr", marginBottom }, children: [
+    config?.ui?.showCoordinatesInput !== false && /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { style: { display: "grid", gridTemplateColumns: "2fr 2fr 1fr", marginBottom }, children: [
       /* @__PURE__ */ jsxRuntime.jsx(designSystem.TextInput, { ref: latRef, name: "lat", placeholder: "Latitud" }),
       /* @__PURE__ */ jsxRuntime.jsx(designSystem.TextInput, { ref: lngRef, name: "lng", placeholder: "Longitud" }),
       /* @__PURE__ */ jsxRuntime.jsx(designSystem.Button, { variant: "secondary", onClick: setLatLng, size: "l", children: "Establecer Ubicación" })
     ] }),
-    /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { style: { display: "grid", gridTemplateColumns: "4fr 1fr", marginBottom }, children: [
-      /* @__PURE__ */ jsxRuntime.jsx(designSystem.TextInput, { ref: searchRef, name: "search", placeholder: "Dirección a buscar" }),
+    config?.ui?.showSearchBox !== false && config?.search?.enabled !== false && /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { style: { display: "grid", gridTemplateColumns: "4fr 1fr", marginBottom }, children: [
+      /* @__PURE__ */ jsxRuntime.jsx(
+        designSystem.TextInput,
+        {
+          ref: searchRef,
+          name: "search",
+          placeholder: config?.search?.placeholder || "Dirección a buscar"
+        }
+      ),
       /* @__PURE__ */ jsxRuntime.jsx(designSystem.Button, { variant: "secondary", onClick: searchLocation, size: "l", children: "Buscar" })
     ] }),
     /* @__PURE__ */ jsxRuntime.jsx(designSystem.Box, { style: { display: "flex", height: "300px", width: "100%", marginBottom }, children: /* @__PURE__ */ jsxRuntime.jsx(designSystem.Box, { style: { width: "100% " }, children: /* @__PURE__ */ jsxRuntime.jsxs(
@@ -114,8 +158,8 @@ const Input = (props) => {
           /* @__PURE__ */ jsxRuntime.jsx(
             reactLeaflet.TileLayer,
             {
-              attribution: mapProps.tileAttribution,
-              url: mapProps.tileUrl,
+              attribution: config?.tileLayer?.attribution || mapProps.tileAttribution,
+              url: config?.tileLayer?.url || mapProps.tileUrl,
               accessToken: mapProps.tileAccessToken
             }
           ),
@@ -123,7 +167,7 @@ const Input = (props) => {
         ]
       }
     ) }) }),
-    /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { style: { marginBottom }, children: [
+    config?.ui?.showCurrentValue !== false && /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Box, { style: { marginBottom }, children: [
       /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Typography, { variant: "delta", style: { marginBottom, display }, children: [
         "Valor actual de ",
         props.label,

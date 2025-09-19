@@ -41,6 +41,40 @@ const contentTypes = {};
 const controller = ({ strapi }) => ({
   index(ctx) {
     ctx.body = strapi.plugin("geodata").service("service").getWelcomeMessage();
+  },
+  getConfig(ctx) {
+    const pluginConfig = strapi.config.get("plugin.geodata", {});
+    const defaultConfig = {
+      defaultMap: {
+        center: { lat: 14.557316602350959, lng: -90.73227524766911 },
+        zoom: 15,
+        maxZoom: 18,
+        minZoom: 5
+      },
+      defaultMarker: {
+        lat: 14.557316602350959,
+        lng: -90.73227524766911,
+        draggable: true
+      },
+      search: {
+        enabled: true,
+        placeholder: "Buscar dirección...",
+        limit: 5,
+        countryCode: "gt"
+      },
+      ui: {
+        showCoordinatesInput: true,
+        showSearchBox: true,
+        showCurrentValue: true,
+        language: "es"
+      },
+      tileLayer: {
+        url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        attribution: "© OpenStreetMap contributors"
+      }
+    };
+    const config2 = { ...defaultConfig, ...pluginConfig };
+    ctx.body = config2;
   }
 });
 const controllers = {
@@ -54,6 +88,14 @@ const routes = [
     path: "/",
     // name of the controller file & the method.
     handler: "controller.index",
+    config: {
+      policies: []
+    }
+  },
+  {
+    method: "GET",
+    path: "/config",
+    handler: "controller.getConfig",
     config: {
       policies: []
     }

@@ -3,7 +3,7 @@ import { Page } from "@strapi/strapi/admin";
 import { Routes, Route } from "react-router-dom";
 import { Main, Box, Typography, BaseLink } from "@strapi/design-system";
 import { useIntl } from "react-intl";
-import { F as ForwardRef } from "./index-CppRHd0i.mjs";
+import { F as ForwardRef } from "./index-DLiWEONi.mjs";
 const HomePage = () => {
   useIntl();
   return /* @__PURE__ */ jsx(Main, { children: /* @__PURE__ */ jsxs(

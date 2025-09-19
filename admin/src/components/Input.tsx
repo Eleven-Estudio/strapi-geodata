@@ -42,7 +42,8 @@ interface InputProps {
   [key: string]: any;
 }
 
-const mapProps = {
+// Los props del mapa ahora serán cargados dinámicamente
+let mapProps = {
   zoom: 15,
   center: [14.557316602350959, -90.73227524766911] as LatLngTuple,
   tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -53,10 +54,51 @@ const mapProps = {
 const Input: React.FC<InputProps> = (props) => {
   const [map, setMap] = useState<any>(null);
   const [location, setLocation] = useState<any>(props.value);
+  const [config, setConfig] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const latRef = useRef<HTMLInputElement>(null);
   const lngRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  // Cargar configuración al montar el componente
+  useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        const response = await fetch('/geodata/config');
+        if (response.ok) {
+          const pluginConfig = await response.json();
+          setConfig(pluginConfig);
+
+          // Actualizar mapProps con la configuración cargada
+          mapProps = {
+            zoom: pluginConfig.defaultMap?.zoom || 15,
+            center: [
+              pluginConfig.defaultMap?.center?.lat || 14.557316602350959,
+              pluginConfig.defaultMap?.center?.lng || -90.73227524766911
+            ] as LatLngTuple,
+            tileUrl: pluginConfig.tileLayer?.url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            tileAttribution: pluginConfig.tileLayer?.attribution || 'OSM attribution',
+            tileAccessToken: '',
+          };
+
+          // Si no hay location inicial, usar el marcador por defecto
+          if (!props.value && pluginConfig.defaultMarker) {
+            setLocation({
+              lat: pluginConfig.defaultMarker.lat,
+              lng: pluginConfig.defaultMarker.lng
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error loading plugin config:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadConfig();
+  }, []);
 
   const onMapClick = useCallback(
     (e: LeafletMouseEvent) => {
@@ -133,6 +175,15 @@ const Input: React.FC<InputProps> = (props) => {
   const marginBottom = '2rem';
   const display = 'block';
 
+  // Mostrar loader mientras carga la configuración
+  if (loading) {
+    return (
+      <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+        <Loader />
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <Typography variant="delta" style={{ marginBottom, display }}>
@@ -144,20 +195,28 @@ const Input: React.FC<InputProps> = (props) => {
         busca una dirección y presiona 'Buscar', o navega en el mapa y haz clic derecho
       </Typography>
 
-      <Box style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', marginBottom }}>
-        <TextInput ref={latRef} name="lat" placeholder="Latitud" />
-        <TextInput ref={lngRef} name="lng" placeholder="Longitud" />
-        <Button variant="secondary" onClick={setLatLng} size="l">
-          Establecer Ubicación
-        </Button>
-      </Box>
+      {config?.ui?.showCoordinatesInput !== false && (
+        <Box style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', marginBottom }}>
+          <TextInput ref={latRef} name="lat" placeholder="Latitud" />
+          <TextInput ref={lngRef} name="lng" placeholder="Longitud" />
+          <Button variant="secondary" onClick={setLatLng} size="l">
+            Establecer Ubicación
+          </Button>
+        </Box>
+      )}
 
-      <Box style={{ display: 'grid', gridTemplateColumns: '4fr 1fr', marginBottom }}>
-        <TextInput ref={searchRef} name="search" placeholder="Dirección a buscar" />
-        <Button variant="secondary" onClick={searchLocation} size="l">
-          Buscar
-        </Button>
-      </Box>
+      {config?.ui?.showSearchBox !== false && config?.search?.enabled !== false && (
+        <Box style={{ display: 'grid', gridTemplateColumns: '4fr 1fr', marginBottom }}>
+          <TextInput
+            ref={searchRef}
+            name="search"
+            placeholder={config?.search?.placeholder || "Dirección a buscar"}
+          />
+          <Button variant="secondary" onClick={searchLocation} size="l">
+            Buscar
+          </Button>
+        </Box>
+      )}
 
       <Box style={{ display: 'flex', height: '300px', width: '100%', marginBottom }}>
         <Box style={{ width: '100% ' }}>
@@ -168,8 +227,8 @@ const Input: React.FC<InputProps> = (props) => {
             style={{ height: '300px', zIndex: 299 }}
           >
             <TileLayer
-              attribution={mapProps.tileAttribution}
-              url={mapProps.tileUrl}
+              attribution={config?.tileLayer?.attribution || mapProps.tileAttribution}
+              url={config?.tileLayer?.url || mapProps.tileUrl}
               accessToken={mapProps.tileAccessToken}
             />
             {location && <Marker position={[location?.lat, location?.lng]} icon={customIcon} />}
@@ -177,19 +236,21 @@ const Input: React.FC<InputProps> = (props) => {
         </Box>
       </Box>
 
-      <Box style={{ marginBottom }}>
-        <Typography variant="delta" style={{ marginBottom, display }}>
-          Valor actual de {props.label}:
-        </Typography>
+      {config?.ui?.showCurrentValue !== false && (
+        <Box style={{ marginBottom }}>
+          <Typography variant="delta" style={{ marginBottom, display }}>
+            Valor actual de {props.label}:
+          </Typography>
 
-        <JSONInput
-          disabled
-          name={props.name}
-          value={JSON.stringify(props.value, null, 2)}
-          onChange={(e: any) => setLocation(e)}
-          style={{ height: '9rem' }}
-        />
-      </Box>
+          <JSONInput
+            disabled
+            name={props.name}
+            value={JSON.stringify(props.value, null, 2)}
+            onChange={(e: any) => setLocation(e)}
+            style={{ height: '9rem' }}
+          />
+        </Box>
+      )}
     </Box>
   );
 };
