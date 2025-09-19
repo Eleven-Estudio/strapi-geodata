@@ -11,7 +11,6 @@ import {
   Toggle,
   Button,
   Grid,
-  GridItem,
   Card,
   CardHeader,
   CardBody,
@@ -165,7 +164,7 @@ const HomePage = () => {
 
         <Grid gap={6}>
           {/* Configuración del Mapa */}
-          <GridItem col={6}>
+          <Grid.Item col={6}>
             <Card>
               <CardHeader>
                 <CardTitle>Configuración del Mapa</CardTitle>
@@ -227,10 +226,10 @@ const HomePage = () => {
                 </Box>
               </CardBody>
             </Card>
-          </GridItem>
+          </Grid.Item>
 
           {/* Configuración del Marcador */}
-          <GridItem col={6}>
+          <Grid.Item col={6}>
             <Card>
               <CardHeader>
                 <CardTitle>Marcador por Defecto</CardTitle>
@@ -264,10 +263,10 @@ const HomePage = () => {
                 </Box>
               </CardBody>
             </Card>
-          </GridItem>
+          </Grid.Item>
 
           {/* Configuración de Búsqueda */}
-          <GridItem col={6}>
+          <Grid.Item col={6}>
             <Card>
               <CardHeader>
                 <CardTitle>Configuración de Búsqueda</CardTitle>
@@ -309,10 +308,10 @@ const HomePage = () => {
                 </Box>
               </CardBody>
             </Card>
-          </GridItem>
+          </Grid.Item>
 
           {/* Configuración de Interfaz */}
-          <GridItem col={6}>
+          <Grid.Item col={6}>
             <Card>
               <CardHeader>
                 <CardTitle>Configuración de Interfaz</CardTitle>
@@ -358,10 +357,10 @@ const HomePage = () => {
                 </Box>
               </CardBody>
             </Card>
-          </GridItem>
+          </Grid.Item>
 
           {/* Configuración de Tiles */}
-          <GridItem col={12}>
+          <Grid.Item col={12}>
             <Card>
               <CardHeader>
                 <CardTitle>Proveedor de Mapas</CardTitle>
@@ -386,10 +385,10 @@ const HomePage = () => {
                 </Box>
               </CardBody>
             </Card>
-          </GridItem>
+          </Grid.Item>
 
           {/* Configuración Generada */}
-          <GridItem col={12}>
+          <Grid.Item col={12}>
             <Card>
               <CardHeader>
                 <CardTitle>Configuración para plugins.ts</CardTitle>
@@ -411,7 +410,7 @@ const HomePage = () => {
                 />
               </CardBody>
             </Card>
-          </GridItem>
+          </Grid.Item>
         </Grid>
 
         {/* Botones de Acción */}
