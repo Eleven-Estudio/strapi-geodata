@@ -2607,7 +2607,7 @@ const index = {
         defaultMessage: PLUGIN_ID
       },
       Component: async () => {
-        const { App } = await Promise.resolve().then(() => require("./App-DhpsI0p_.js"));
+        const { App } = await Promise.resolve().then(() => require("./App-BPGQpHrq.js"));
         return App;
       }
     });
@@ -2628,7 +2628,7 @@ const index = {
       isResizable: true,
       icon: ForwardRef,
       components: {
-        Input: async () => Promise.resolve().then(() => require("./Input-CPP1HnJG.js"))
+        Input: async () => Promise.resolve().then(() => require("./Input-DqKVeBMo.js"))
       },
       options: {
         base: [

@@ -2,10 +2,8 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
-import { F as ForwardRef } from "./index-BZLuze5Q.mjs";
 import { Box, Typography, TextInput, Button, JSONInput } from "@strapi/design-system";
 import "leaflet/dist/leaflet.css";
-const version = "0.1.02";
 const iconUrl = "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png";
 const iconRetinaUrl = "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png";
 const shadowUrl = "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png";
@@ -80,22 +78,16 @@ const Input = (props) => {
   const marginBottom = "2rem";
   const display = "block";
   return /* @__PURE__ */ jsxs(Box, { children: [
-    /* @__PURE__ */ jsxs(Typography, { variant: "delta", style: { marginBottom, display }, children: [
-      /* @__PURE__ */ jsx(ForwardRef, { style: { width: "3rem", height: "3rem" } }),
-      " ",
-      props.label,
-      " v ",
-      version
-    ] }),
-    /* @__PURE__ */ jsx(Typography, { variant: "omega", style: { marginBottom, display }, children: "To set the location, enter the coordinates and click on 'Set Location', or search for an address and press 'Search', or navigate on the map and right-click" }),
+    /* @__PURE__ */ jsx(Typography, { variant: "delta", style: { marginBottom, display }, children: props.label }),
+    /* @__PURE__ */ jsx(Typography, { variant: "omega", style: { marginBottom, display }, children: "Para establecer la ubicación, ingresa las coordenadas y haz clic en 'Establecer Ubicación', busca una dirección y presiona 'Buscar', o navega en el mapa y haz clic derecho" }),
     /* @__PURE__ */ jsxs(Box, { style: { display: "grid", gridTemplateColumns: "2fr 2fr 1fr", marginBottom }, children: [
-      /* @__PURE__ */ jsx(TextInput, { ref: latRef, name: "lat", placeholder: "Latitude" }),
-      /* @__PURE__ */ jsx(TextInput, { ref: lngRef, name: "lng", placeholder: "Longitude" }),
-      /* @__PURE__ */ jsx(Button, { variant: "secondary", onClick: setLatLng, size: "l", children: "Set Location" })
+      /* @__PURE__ */ jsx(TextInput, { ref: latRef, name: "lat", placeholder: "Latitud" }),
+      /* @__PURE__ */ jsx(TextInput, { ref: lngRef, name: "lng", placeholder: "Longitud" }),
+      /* @__PURE__ */ jsx(Button, { variant: "secondary", onClick: setLatLng, size: "l", children: "Establecer Ubicación" })
     ] }),
     /* @__PURE__ */ jsxs(Box, { style: { display: "grid", gridTemplateColumns: "4fr 1fr", marginBottom }, children: [
-      /* @__PURE__ */ jsx(TextInput, { ref: searchRef, name: "search", placeholder: "Address to search" }),
-      /* @__PURE__ */ jsx(Button, { variant: "secondary", onClick: searchLocation, size: "l", children: "Search" })
+      /* @__PURE__ */ jsx(TextInput, { ref: searchRef, name: "search", placeholder: "Dirección a buscar" }),
+      /* @__PURE__ */ jsx(Button, { variant: "secondary", onClick: searchLocation, size: "l", children: "Buscar" })
     ] }),
     /* @__PURE__ */ jsx(Box, { style: { display: "flex", height: "300px", width: "100%", marginBottom }, children: /* @__PURE__ */ jsx(Box, { style: { width: "100% " }, children: /* @__PURE__ */ jsxs(
       MapContainer,
@@ -119,9 +111,9 @@ const Input = (props) => {
     ) }) }),
     /* @__PURE__ */ jsxs(Box, { style: { marginBottom }, children: [
       /* @__PURE__ */ jsxs(Typography, { variant: "delta", style: { marginBottom, display }, children: [
-        "Current ",
+        "Valor actual de ",
         props.label,
-        " value:"
+        ":"
       ] }),
       /* @__PURE__ */ jsx(
         JSONInput,

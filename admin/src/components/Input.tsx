@@ -2,8 +2,6 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import type { LatLngTuple, LeafletMouseEvent } from 'leaflet';
-import PluginIcon from './../components/PluginIcon';
-import { version } from './../../../package.json';
 
 import {
   Box,
@@ -122,27 +120,26 @@ const Input: React.FC<InputProps> = (props) => {
   return (
     <Box>
       <Typography variant="delta" style={{ marginBottom, display }}>
-        <PluginIcon style={{width: "3rem", height:"3rem"}}/>
-        {' '}{props.label} v {version}
+        {props.label}
       </Typography>
 
       <Typography variant="omega" style={{ marginBottom, display }}>
-        To set the location, enter the coordinates and click on 'Set Location', or search for an
-        address and press 'Search', or navigate on the map and right-click
+        Para establecer la ubicación, ingresa las coordenadas y haz clic en 'Establecer Ubicación',
+        busca una dirección y presiona 'Buscar', o navega en el mapa y haz clic derecho
       </Typography>
 
       <Box style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', marginBottom }}>
-        <TextInput ref={latRef} name="lat" placeholder="Latitude" />
-        <TextInput ref={lngRef} name="lng" placeholder="Longitude" />
+        <TextInput ref={latRef} name="lat" placeholder="Latitud" />
+        <TextInput ref={lngRef} name="lng" placeholder="Longitud" />
         <Button variant="secondary" onClick={setLatLng} size="l">
-          Set Location
+          Establecer Ubicación
         </Button>
       </Box>
 
       <Box style={{ display: 'grid', gridTemplateColumns: '4fr 1fr', marginBottom }}>
-        <TextInput ref={searchRef} name="search" placeholder="Address to search" />
+        <TextInput ref={searchRef} name="search" placeholder="Dirección a buscar" />
         <Button variant="secondary" onClick={searchLocation} size="l">
-          Search
+          Buscar
         </Button>
       </Box>
 
@@ -166,7 +163,7 @@ const Input: React.FC<InputProps> = (props) => {
 
       <Box style={{ marginBottom }}>
         <Typography variant="delta" style={{ marginBottom, display }}>
-          Current {props.label} value:
+          Valor actual de {props.label}:
         </Typography>
 
         <JSONInput
