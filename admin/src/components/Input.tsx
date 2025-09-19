@@ -208,7 +208,7 @@ const Input: React.FC<InputProps> = (props) => {
       </Typography>
 
       {config?.ui?.showCoordinatesInput !== false && (
-        <Box style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', marginBottom }}>
+        <Box style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: '0.5rem', marginBottom }}>
           <TextInput ref={latRef} name="lat" placeholder="Latitud" />
           <TextInput ref={lngRef} name="lng" placeholder="Longitud" />
           <Button variant="secondary" onClick={setLatLng} size="l">
@@ -241,9 +241,9 @@ const Input: React.FC<InputProps> = (props) => {
             const initialCenter: LatLngTuple = props.value?.lat && props.value?.lng
               ? [props.value.lat, props.value.lng] as LatLngTuple
               : [
-                  config?.defaultMap?.center?.lat || 14.557316602350959,
-                  config?.defaultMap?.center?.lng || -90.73227524766911
-                ] as LatLngTuple;
+                config?.defaultMap?.center?.lat || 14.557316602350959,
+                config?.defaultMap?.center?.lng || -90.73227524766911
+              ] as LatLngTuple;
 
             return (
               <MapContainer
