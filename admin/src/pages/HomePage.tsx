@@ -17,8 +17,6 @@ import {
   CardTitle,
   Divider,
   Alert,
-  SingleSelect,
-  SingleSelectOption,
   Textarea
 } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
@@ -345,15 +343,27 @@ const HomePage = () => {
                     onChange={() => updateConfig('ui.showCurrentValue', !config.ui.showCurrentValue)}
                   />
 
-                  <SingleSelect
-                    label="Idioma"
-                    name="ui.language"
-                    value={config.ui.language}
-                    onSelectionChange={(value: string) => updateConfig('ui.language', value)}
-                  >
-                    <SingleSelectOption value="es">Español</SingleSelectOption>
-                    <SingleSelectOption value="en">English</SingleSelectOption>
-                  </SingleSelect>
+                  <Box>
+                    <Typography variant="pi" style={{ marginBottom: '0.5rem', fontWeight: '600' }}>
+                      Idioma
+                    </Typography>
+                    <Box style={{ display: 'flex', gap: '1rem' }}>
+                      <Button
+                        variant={config.ui.language === 'es' ? 'default' : 'secondary'}
+                        onClick={() => updateConfig('ui.language', 'es')}
+                        size="S"
+                      >
+                        Español
+                      </Button>
+                      <Button
+                        variant={config.ui.language === 'en' ? 'default' : 'secondary'}
+                        onClick={() => updateConfig('ui.language', 'en')}
+                        size="S"
+                      >
+                        English
+                      </Button>
+                    </Box>
+                  </Box>
                 </Box>
               </CardBody>
             </Card>
