@@ -198,13 +198,8 @@ const Input: React.FC<InputProps> = (props) => {
 
   return (
     <Box>
-      <Typography variant="delta" style={{ marginBottom, display }}>
-        {props.label}
-      </Typography>
-
       <Typography variant="omega" style={{ marginBottom, display }}>
-        Para establecer la ubicación, ingresa las coordenadas y haz clic en 'Establecer Ubicación',
-        busca una dirección y presiona 'Buscar', o haz clic en el mapa
+        Para establecer la ubicación, ingresa las coordenadas y haz clic en 'Establecer Ubicación' o haz clic en el mapa.
       </Typography>
 
       {config?.ui?.showCoordinatesInput !== false && (
