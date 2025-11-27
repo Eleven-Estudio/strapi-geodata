@@ -6,19 +6,20 @@ import { PinMap } from '@strapi/icons';
 
 export default {
   register(app: any) {
-    app.addMenuLink({
-      to: `plugins/${PLUGIN_ID}`,
-      icon: PinMap,
-      intlLabel: {
-        id: `${PLUGIN_ID}.plugin.name`,
-        defaultMessage: PLUGIN_ID,
-      },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-
-        return App;
-      },
-    });
+    // HomePage ocultada temporalmente
+    // app.addMenuLink({
+    //   to: `plugins/${PLUGIN_ID}`,
+    //   icon: PinMap,
+    //   intlLabel: {
+    //     id: `${PLUGIN_ID}.plugin.name`,
+    //     defaultMessage: PLUGIN_ID,
+    //   },
+    //   Component: async () => {
+    //     const { App } = await import('./pages/App');
+    //
+    //     return App;
+    //   },
+    // });
 
     app.customFields.register({
       name: 'geojson',

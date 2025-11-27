@@ -106,9 +106,9 @@ const Input: React.FC<InputProps> = (props) => {
 
   useEffect(() => {
     if (!map) return;
-    map.on('contextmenu', onMapClick);
+    map.on('click', onMapClick);
     return () => {
-      map.off('contextmenu', onMapClick);
+      map.off('click', onMapClick);
     };
   }, [map, onMapClick]);
 
@@ -204,7 +204,7 @@ const Input: React.FC<InputProps> = (props) => {
 
       <Typography variant="omega" style={{ marginBottom, display }}>
         Para establecer la ubicación, ingresa las coordenadas y haz clic en 'Establecer Ubicación',
-        busca una dirección y presiona 'Buscar', o navega en el mapa y haz clic derecho
+        busca una dirección y presiona 'Buscar', o haz clic en el mapa
       </Typography>
 
       {config?.ui?.showCoordinatesInput !== false && (
