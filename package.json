@@ -67,7 +67,7 @@
     "displayName": "Geo Data",
     "description": "geo data"
   },
-  "name": "strapi-geodata",
+  "name": "strapi-enhanced-geodata",
   "description": "geo data",
   "license": "MIT",
   "repository": {

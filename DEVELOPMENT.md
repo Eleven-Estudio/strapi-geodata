@@ -1,6 +1,6 @@
-# Guía de Desarrollo - strapi-geodata
+# Guía de Desarrollo - strapi-enhanced-geodata
 
-Esta guía explica cómo trabajar con el plugin `strapi-geodata` tanto para desarrollo local como para instalación en proyectos.
+Esta guía explica cómo trabajar con el plugin `strapi-enhanced-geodata` tanto para desarrollo local como para instalación en proyectos.
 
 ## Tabla de Contenidos
 
@@ -19,7 +19,7 @@ Cuando necesites hacer cambios al plugin y probarlos en un proyecto Strapi exist
 
 ```bash
 # En el directorio del plugin
-cd /ruta/a/strapi-geodata
+cd /ruta/a/strapi-enhanced-geodata
 
 # Construir el plugin (primera vez)
 pnpm run build
@@ -39,7 +39,7 @@ El comando `watch:link` hace dos cosas:
 cd /ruta/a/tu/proyecto-strapi
 
 # Agregar el plugin local con yalc
-pnpm dlx yalc add --link strapi-geodata
+pnpm dlx yalc add --link strapi-enhanced-geodata
 
 # Instalar dependencias
 pnpm install
@@ -52,7 +52,7 @@ El proyecto necesita un symlink para que Strapi reconozca el plugin. Agrega o ac
 ```json
 {
   "scripts": {
-    "postinstall": "cd node_modules && ln -sf strapi-geodata geodata"
+    "postinstall": "cd node_modules && ln -sf strapi-enhanced-geodata geodata"
   }
 }
 ```
@@ -79,7 +79,7 @@ Cuando termines de desarrollar:
 
 # En el proyecto Strapi, remover el enlace yalc
 cd /ruta/a/tu/proyecto-strapi
-pnpm dlx yalc remove strapi-geodata
+pnpm dlx yalc remove strapi-enhanced-geodata
 ```
 
 ---
@@ -91,7 +91,7 @@ Cuando estés listo para publicar los cambios a npm:
 ### 1. Verificar que Todo Esté Listo
 
 ```bash
-cd /ruta/a/strapi-geodata
+cd /ruta/a/strapi-enhanced-geodata
 
 # Asegurarte de que no hay enlaces yalc activos
 # Verificar estado de git
@@ -181,9 +181,9 @@ Para instalar el plugin en un proyecto Strapi nuevo o existente:
 cd /ruta/a/tu/proyecto-strapi
 
 # Instalar desde npm
-pnpm add strapi-geodata
+pnpm add strapi-enhanced-geodata
 # o
-npm install strapi-geodata
+npm install strapi-enhanced-geodata
 ```
 
 ### 2. Configurar el Symlink
@@ -193,7 +193,7 @@ Agrega el script `postinstall` en `package.json` del proyecto:
 ```json
 {
   "scripts": {
-    "postinstall": "cd node_modules && ln -sf strapi-geodata geodata"
+    "postinstall": "cd node_modules && ln -sf strapi-enhanced-geodata geodata"
   }
 }
 ```
@@ -329,7 +329,7 @@ git log --oneline -10
 
 1. Verifica que estás autenticado: `npm whoami`
 2. Verifica permisos del paquete en npm
-3. Asegúrate de que la versión no existe ya: `npm view strapi-geodata versions`
+3. Asegúrate de que la versión no existe ya: `npm view strapi-enhanced-geodata versions`
 
 ---
 
@@ -346,5 +346,5 @@ git log --oneline -10
 ## Soporte
 
 Para problemas o preguntas:
-- GitHub Issues: https://github.com/red-made/strapi-geodata/issues
+- GitHub Issues: https://github.com/red-made/strapi-enhanced-geodata/issues
 - Email: info@red-made.com
